@@ -15,6 +15,13 @@ let steps = [
   const inputStepDiv = document.getElementById("input-step");
   const userNumberInput = document.getElementById("userNumberInput");
   const startBtn = document.getElementById("startBtn");
+  const clockSound = new Audio("mouse-click.mp3");
+  const tadaSound = new Audio("tada-fanfare.mp3");
+  document.getElementById("shareBtn").style.display = "none";
+  document.getElementById("shareMsg").style.display = "none";
+
+
+
   
   // Funzione per mostrare lo step attuale
   function showStep() {
@@ -28,13 +35,14 @@ let steps = [
       nextBtn.style.display = "none"; // nasconde il bottone un attimo
   
       setTimeout(() => {
+        tadaSound.play();
         stepDiv.innerHTML = `
           Il risultato è...
           <span class="result-number">${risultato} 🎯</span>
         `;
         nextBtn.textContent = "Ricomincia";
         nextBtn.style.display = "inline-block";
-      }, 1500); // Suspense di 1.5 secondi
+      }, 1000); // Suspense di 1.5 secondi
     } else {
       stepDiv.textContent = steps[currentStep];
       nextBtn.textContent = currentStep < steps.length - 1 ? "Avanti" : "Ricomincia";
@@ -47,27 +55,51 @@ let steps = [
   
   // Clic su "Avanti"
   nextBtn.addEventListener("click", () => {
+    clockSound.play(); // suono clic
+  
     currentStep++;
   
     if (currentStep === 2) {
-      // Stop: chiede il numero pari
+      // Stop: chiedi il numero pari
       nextBtn.style.display = "none";
       inputStepDiv.style.display = "block";
       stepDiv.textContent = "Ora scegli un numero pari da aggiungere:";
       return;
     }
   
+    if (currentStep === steps.length - 1) {
+      // Ultimo step: suspense + tada
+      const risultato = numeroPari / 2;
+      stepDiv.innerHTML = "Il risultato è...";
+      nextBtn.style.display = "none";
+  
+      setTimeout(() => {
+        tadaSound.play(); // suono finale
+        stepDiv.innerHTML = `
+          Il risultato è...
+          <span class="result-number">${risultato} 🎯</span>
+        `;
+        document.getElementById("shareBtn").style.display = "inline-block";
+        nextBtn.textContent = "Ricomincia";
+        nextBtn.style.display = "inline-block";
+      }, 1000);
+      return;
+    }
+  
     if (currentStep < steps.length) {
       showStep();
     } else {
-      // Riavvia tutto
+      // Reset del gioco
       currentStep = 0;
       numeroPari = 0;
       steps[2] = "⏳ Attendi...";
       steps[5] = "Il risultato è...";
+      document.getElementById("shareBtn").style.display = "none";
+      document.getElementById("shareMsg").style.display = "none";
       showStep();
     }
   });
+  
   
   // Clic su "Continua" dopo aver inserito il numero pari
   startBtn.addEventListener("click", () => {
@@ -91,5 +123,18 @@ let steps = [
   });
 
   showStep(); // Mostra subito il primo step
+
+  shareBtn.addEventListener("click", () => {
+    const link = "https://eugigari92.github.io/number-trick-game";
+  
+    navigator.clipboard.writeText(link).then(() => {
+      shareMsg.style.display = "block";
+      setTimeout(() => {
+        shareMsg.style.display = "none";
+      }, 2000);
+    }).catch(() => {
+      alert("Non è stato possibile copiare il link.");
+    });
+  });
 
   
