@@ -24,7 +24,7 @@ let steps = [
 
   setTimeout(() => {
     const bgMusic = document.getElementById("bgMusic");
-    bgMusic.volume = 0.15;
+    bgMusic.volume = 0.01;
     bgMusic.play().catch(() => {
       // alcuni browser bloccano l'autoplay, ma ci proviamo comunque
       console.log("Musica non avviata automaticamente");
@@ -75,7 +75,7 @@ let steps = [
     clockSound.play(); // suono clic
     const bgMusic = document.getElementById("bgMusic");
     if (bgMusic && bgMusic.paused) {
-  bgMusic.volume = 0.05;
+  bgMusic.volume = 0.005;
   bgMusic.play().catch(() => {
     console.log("Autoplay audio bloccato");
   });
