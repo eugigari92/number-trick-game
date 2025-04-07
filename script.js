@@ -75,7 +75,7 @@ let steps = [
     clockSound.play(); // suono clic
     const bgMusic = document.getElementById("bgMusic");
     if (bgMusic && bgMusic.paused) {
-  bgMusic.volume = 0.15;
+  bgMusic.volume = 0.05;
   bgMusic.play().catch(() => {
     console.log("Autoplay audio bloccato");
   });
