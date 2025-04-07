@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Confetti Test</title>
+</head>
+<body style="display: flex; align-items: center; justify-content: center; height: 100vh;">
+  <button onclick="fireConfetti()">Lancia i confetti!</button>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script>
+    function fireConfetti() {
+      confetti({
+        particleCount: 150,
+        spread: 90,
+        origin: { y: 0.6 }
+      });
+    }
+  </script>
+</body>
+</html>

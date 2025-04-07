@@ -1,9 +1,9 @@
 let steps = [
-    "Pensa un numero intero qualsiasi.",
+    "Pensa un numero intero qualsiasi. E ricordatelo !",
     "Moltiplica quel numero per 2.",
     "⏳ Attendi...",
     "Dividi il risultato per 2.",
-    "Ora sottrai il numero che avevi pensato.",
+    "Ora sottrai il numero che avevi pensato all'inizio.",
     "Il risultato è..."
   ];
   
@@ -36,13 +36,18 @@ let steps = [
   
       setTimeout(() => {
         tadaSound.play();
+        confetti({
+            particleCount: 150,
+            spread: 90,
+            origin: { y: 0.6 }
+        });
         stepDiv.innerHTML = `
           Il risultato è...
           <span class="result-number">${risultato} 🎯</span>
         `;
         nextBtn.textContent = "Ricomincia";
         nextBtn.style.display = "inline-block";
-      }, 1000); // Suspense di 1.5 secondi
+      }, 1000); // Suspense di 1 secondi
     } else {
       stepDiv.textContent = steps[currentStep];
       nextBtn.textContent = currentStep < steps.length - 1 ? "Avanti" : "Ricomincia";
@@ -63,7 +68,7 @@ let steps = [
       // Stop: chiedi il numero pari
       nextBtn.style.display = "none";
       inputStepDiv.style.display = "block";
-      stepDiv.textContent = "Ora scegli un numero pari da aggiungere:";
+      stepDiv.textContent = "Ora scegli un numero pari:";
       return;
     }
   
@@ -75,6 +80,11 @@ let steps = [
   
       setTimeout(() => {
         tadaSound.play(); // suono finale
+        confetti({
+            particleCount: 150,
+            spread: 90,
+            origin: { y: 0.6 }
+        });
         stepDiv.innerHTML = `
           Il risultato è...
           <span class="result-number">${risultato} 🎯</span>
@@ -114,7 +124,7 @@ let steps = [
     const risultato = numeroPari / 2;
   
     // Aggiorna gli step dinamicamente
-    steps[2] = `Aggiungi ${numeroPari}.`;
+    steps[2] = `Bene, allora aggiungi proprio ${numeroPari}.`;
     steps[5] = `Il risultato è... ${risultato}! 🎯`;
   
     inputStepDiv.style.display = "none";
