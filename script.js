@@ -22,6 +22,18 @@ let steps = [
 
 
 
+  setTimeout(() => {
+    const bgMusic = document.getElementById("bgMusic");
+    bgMusic.volume = 0.15;
+    bgMusic.play().catch(() => {
+      // alcuni browser bloccano l'autoplay, ma ci proviamo comunque
+      console.log("Musica non avviata automaticamente");
+    });
+  }, 1000);
+  
+
+
+
   
   // Funzione per mostrare lo step attuale
   function showStep() {
@@ -61,6 +73,14 @@ let steps = [
   // Clic su "Avanti"
   nextBtn.addEventListener("click", () => {
     clockSound.play(); // suono clic
+    const bgMusic = document.getElementById("bgMusic");
+    if (bgMusic && bgMusic.paused) {
+  bgMusic.volume = 0.15;
+  bgMusic.play().catch(() => {
+    console.log("Autoplay audio bloccato");
+  });
+}
+
   
     currentStep++;
   
@@ -132,6 +152,12 @@ let steps = [
     showStep(); // Mostra subito lo step 2 aggiornato
   });
 
+
+
+
+
+
+
   showStep(); // Mostra subito il primo step
 
   shareBtn.addEventListener("click", () => {
@@ -146,5 +172,8 @@ let steps = [
       alert("Non è stato possibile copiare il link.");
     });
   });
+
+
+
 
   

@@ -168,6 +168,19 @@ html, body {
       transform: scale(1);
     }
   }
+
+  .qr-floating {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 100px;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+  }
+  
+  .qr-floating:hover {
+    opacity: 1;
+  }
   
   
   
