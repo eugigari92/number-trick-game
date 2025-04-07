@@ -18,9 +18,32 @@ let steps = [
   
   // Funzione per mostrare lo step attuale
   function showStep() {
-    stepDiv.textContent = steps[currentStep];
-    nextBtn.textContent = currentStep < steps.length - 1 ? "Avanti" : "Ricomincia";
+    stepDiv.classList.remove("fade-in");
+    void stepDiv.offsetWidth; // forza il reflow
+  
+    if (currentStep === steps.length - 1) {
+      // Ultimo step: suspense
+      const risultato = numeroPari / 2;
+      stepDiv.innerHTML = "Il risultato è...";
+      nextBtn.style.display = "none"; // nasconde il bottone un attimo
+  
+      setTimeout(() => {
+        stepDiv.innerHTML = `
+          Il risultato è...
+          <span class="result-number">${risultato} 🎯</span>
+        `;
+        nextBtn.textContent = "Ricomincia";
+        nextBtn.style.display = "inline-block";
+      }, 1500); // Suspense di 1.5 secondi
+    } else {
+      stepDiv.textContent = steps[currentStep];
+      nextBtn.textContent = currentStep < steps.length - 1 ? "Avanti" : "Ricomincia";
+    }
+  
+    stepDiv.classList.add("fade-in");
   }
+  
+  
   
   // Clic su "Avanti"
   nextBtn.addEventListener("click", () => {
